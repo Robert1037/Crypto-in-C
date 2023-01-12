@@ -1,7 +1,7 @@
 /**
  * MIT License
  * Copyright (c) 2023 Robert1037
- * sha256fast.c v1.0 win10 x64
+ * sha256fast.c v2.0 x64
  * Last modified: 2023-01-12
  **/
 #include <stdio.h>
@@ -28,7 +28,7 @@ int main()
         0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
         0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
         0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
-    };  
+    };
     register unsigned int *Kp, *W, *M, a, b, c, d, e, f, g, h, T1,
         H0 = 0x6a09e667,  H1 = 0xbb67ae85,  H2 = 0x3c6ef372,  H3 = 0xa54ff53a,
         H4 = 0x510e527f,  H5 = 0x9b05688c,  H6 = 0x1f83d9ab,  H7 = 0x5be0cd19;
@@ -43,11 +43,11 @@ int main()
         a = ftell(fp);
         b = a & 63; // a % 64;
         b = a + ((b < 56) ? (M_LEN - b) : (M_LEN | (M_LEN - b)));
-        ch = (char*)calloc(b + 254, 1); // 254 == 62 * sizeof(int), it's for W.
-        if (!ch)
-            exit(0);
+        if (!(ch = (char*)calloc(b + 254, 1))) // 254 == 62 * sizeof(int), it's for W.
+            return 0;
         rewind(fp);
-        fread(ch, 1, a, fp);
+        if ((c = fread(ch, 1, a, fp)) != a)
+            return 0;
         fclose(fp);
     } else {
         a = ch - name;
@@ -171,7 +171,9 @@ int main()
     } while (M != W);
     t2 = clock(); //finish
     printf("%.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x", H0, H1, H2, H3, H4, H5, H6, H7);
-    printf("\ntotal cost time: %ldms\n", t2 - t1);
+    printf("\ntotal cost time: %lf s\n", (double)(t2 - t1)/CLOCKS_PER_SEC);
+#ifdef _WIN64
     system("pause");
+#endif
     return 0;
 }

@@ -1,7 +1,7 @@
 /**
  * MIT License
  * Copyright (c) 2023 Robert1037
- * sha256full.c v1.0 win10 x64
+ * sha256full.c v2.0 x64
  * Last modified: 2023-01-12
  **/
 #include <stdio.h>
@@ -81,13 +81,15 @@ If the file dose not exist,\nthe inputted string will be computed.\n");
             printf("file: %s exists\nlength: %u bytes\n", name, size);
             len = size & 63; // size % 64;
             len = size + ((len < 56) ? (M_LEN - len) : (M_LEN | (M_LEN - len)));
-            ch = (char*)calloc(len + 256, 1); // 256 == 64 * sizeof(int), it's for W.
-            if (!ch) {
+            if (!(ch = (char*)calloc(len + 256, 1))) { // 256 == 64 * sizeof(int), it's for W.
                 printf("ERROR: calloc failed!\n");
-                exit(0);
+                return 0;
             }
             rewind(fp);
-            fread(ch, 1, size, fp);
+            if (fread(ch, 1, size, fp) != size) {
+                printf("ERROR: read file failed!\n");
+                return 0;
+            }
             fclose(fp);
             free(name);
         } else {
@@ -112,7 +114,7 @@ If the file dose not exist,\nthe inputted string will be computed.\n");
         t2 = clock(); //computation start
         Hash(M, M + len);
         t3 = clock(); //finish
-        printf("\nconvertion  cost time: %ldms\ncomputation cost time: %ldms\ntotal cost time: %ldms\n",
-            t2 - t1, t3 - t2, t3 - t1);
+        printf("\nconvertion  cost time: %lf s\ncomputation cost time: %lf s\ntotal cost time: %lf s\n",
+            (double)(t2 - t1)/CLOCKS_PER_SEC, (double)(t3 - t2)/CLOCKS_PER_SEC, (double)(t3 - t1)/CLOCKS_PER_SEC);
     }
 }
