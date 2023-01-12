@@ -1,3 +1,9 @@
+/**
+ * MIT License
+ * Copyright (c) 2023 Robert1037
+ * sha256fast.c v1.0
+ * Last modified: 2023-01-12
+ **/
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>

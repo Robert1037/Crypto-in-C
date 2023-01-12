@@ -1,3 +1,9 @@
+/**
+ * MIT License
+ * Copyright (c) 2023 Robert1037
+ * sha256min.c v1.0
+ * Last modified: 2023-01-12
+ **/
 #include <stdio.h>
 #include <stdlib.h>
 #define M_LEN 64 //each M block is 512 bits == 64 bytes
