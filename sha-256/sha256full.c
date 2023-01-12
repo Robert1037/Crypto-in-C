@@ -1,7 +1,7 @@
 /**
  * MIT License
  * Copyright (c) 2023 Robert1037
- * sha256full.c v1.0
+ * sha256full.c v1.0 win10 x64
  * Last modified: 2023-01-12
  **/
 #include <stdio.h>
