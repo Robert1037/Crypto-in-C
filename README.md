@@ -1,4 +1,4 @@
 ## Reference
 
-[1] Wade Trappe, Lawrence Washington. **Introduction to Cryptography with Coding Theory (3rd edition)** [M]. Hoboken: Pearson Education, 2020.
+Wade Trappe, Lawrence C. Washington. **Introduction to Cryptography with Coding Theory (3rd edition)** [M]. Hoboken: Pearson Education, 2020.
 
