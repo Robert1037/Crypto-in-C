@@ -1,8 +1,8 @@
 /**
  * MIT License
  * Copyright (c) 2023 Robert1037
- * sha256fast.c v2.0 x64
- * Last modified: 2023-01-12
+ * sha256fast.c v2.1 little-endian
+ * Last modified: 2023-01-21
  **/
 #include <stdio.h>
 #include <stdlib.h>
@@ -46,7 +46,7 @@ int main()
         if (!(ch = (char*)calloc(b + 254, 1))) // 254 == 62 * sizeof(int), it's for W.
             return 0;
         rewind(fp);
-        if ((c = fread(ch, 1, a, fp)) != a)
+        if (fread(ch, 1, a, fp) != a)
             return 0;
         fclose(fp);
     } else {
@@ -71,90 +71,88 @@ int main()
     do { // 1 -> N blocks of M
         a = H0;  b = H1;  c = H2;  d = H3;
         e = H4;  f = H5;  g = H6;  h = H7;
-        //do { // j : 0 -> 15
-            *W = *M;          
-            T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0x428a2f98; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
-            h = g;  g = f;  f = e;  e = d + T1;
-            d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
-            W++;  M++;
-            *W = *M;          
-            T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0x71374491; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
-            h = g;  g = f;  f = e;  e = d + T1;
-            d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
-            W++;  M++;
-            *W = *M;          
-            T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0xb5c0fbcf; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
-            h = g;  g = f;  f = e;  e = d + T1;
-            d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
-            W++;  M++;
-            *W = *M;          
-            T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0xe9b5dba5; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
-            h = g;  g = f;  f = e;  e = d + T1;
-            d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
-            W++;  M++;
-            *W = *M;          
-            T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0x3956c25b; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
-            h = g;  g = f;  f = e;  e = d + T1;
-            d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
-            W++;  M++;
-            *W = *M;          
-            T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0x59f111f1; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
-            h = g;  g = f;  f = e;  e = d + T1;
-            d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
-            W++;  M++;
-            *W = *M;          
-            T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0x923f82a4; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
-            h = g;  g = f;  f = e;  e = d + T1;
-            d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
-            W++;  M++;
-            *W = *M;          
-            T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0xab1c5ed5; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
-            h = g;  g = f;  f = e;  e = d + T1;
-            d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
-            W++;  M++;
-            *W = *M;          
-            T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0xd807aa98; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
-            h = g;  g = f;  f = e;  e = d + T1;
-            d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
-            W++;  M++;
-            *W = *M;          
-            T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0x12835b01; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
-            h = g;  g = f;  f = e;  e = d + T1;
-            d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
-            W++;  M++;
-            *W = *M;          
-            T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0x243185be; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
-            h = g;  g = f;  f = e;  e = d + T1;
-            d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
-            W++;  M++;
-            *W = *M;          
-            T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0x550c7dc3; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
-            h = g;  g = f;  f = e;  e = d + T1;
-            d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
-            W++;  M++;
-            *W = *M;          
-            T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0x72be5d74; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
-            h = g;  g = f;  f = e;  e = d + T1;
-            d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
-            W++;  M++;
-            *W = *M;          
-            T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0x80deb1fe; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
-            h = g;  g = f;  f = e;  e = d + T1;
-            d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
-            W++;  M++;
-            *W = *M;          
-            T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0x9bdc06a7; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
-            h = g;  g = f;  f = e;  e = d + T1;
-            d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
-            W++;  M++;
-            *W = *M;          
-            T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0xc19bf174; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
-            h = g;  g = f;  f = e;  e = d + T1;
-            d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
-            W++;  M++;
-        //} while (Kp != &K[16]);
+        *W = *M;          
+        T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0x428a2f98; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
+        h = g;  g = f;  f = e;  e = d + T1;
+        d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
+        W++;  M++;
+        *W = *M;          
+        T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0x71374491; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
+        h = g;  g = f;  f = e;  e = d + T1;
+        d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
+        W++;  M++;
+        *W = *M;          
+        T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0xb5c0fbcf; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
+        h = g;  g = f;  f = e;  e = d + T1;
+        d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
+        W++;  M++;
+        *W = *M;          
+        T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0xe9b5dba5; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
+        h = g;  g = f;  f = e;  e = d + T1;
+        d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
+        W++;  M++;
+        *W = *M;          
+        T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0x3956c25b; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
+        h = g;  g = f;  f = e;  e = d + T1;
+        d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
+        W++;  M++;
+        *W = *M;          
+        T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0x59f111f1; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
+        h = g;  g = f;  f = e;  e = d + T1;
+        d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
+        W++;  M++;
+        *W = *M;          
+        T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0x923f82a4; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
+        h = g;  g = f;  f = e;  e = d + T1;
+        d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
+        W++;  M++;
+        *W = *M;          
+        T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0xab1c5ed5; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
+        h = g;  g = f;  f = e;  e = d + T1;
+        d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
+        W++;  M++;
+        *W = *M;          
+        T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0xd807aa98; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
+        h = g;  g = f;  f = e;  e = d + T1;
+        d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
+        W++;  M++;
+        *W = *M;          
+        T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0x12835b01; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
+        h = g;  g = f;  f = e;  e = d + T1;
+        d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
+        W++;  M++;
+        *W = *M;          
+        T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0x243185be; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
+        h = g;  g = f;  f = e;  e = d + T1;
+        d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
+        W++;  M++;
+        *W = *M;          
+        T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0x550c7dc3; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
+        h = g;  g = f;  f = e;  e = d + T1;
+        d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
+        W++;  M++;
+        *W = *M;          
+        T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0x72be5d74; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
+        h = g;  g = f;  f = e;  e = d + T1;
+        d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
+        W++;  M++;
+        *W = *M;          
+        T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0x80deb1fe; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
+        h = g;  g = f;  f = e;  e = d + T1;
+        d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
+        W++;  M++;
+        *W = *M;          
+        T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0x9bdc06a7; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
+        h = g;  g = f;  f = e;  e = d + T1;
+        d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
+        W++;  M++;
+        *W = *M;          
+        T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + 0xc19bf174; //T1 ← h + Σ1(e) + Ch(e, f, g) + Wj + Kj
+        h = g;  g = f;  f = e;  e = d + T1;
+        d = c;  c = b;  b = a;  a = T1 + Sigma_E0(b) + Maj(b, c, d); //T2 ← Σ0(a) + Maj(a, b, c)
+        W++;  M++;
         Kp = K;
-        do { // j : 16 -> 63
+        do {
             *W = Sigma_o1(W[-2]) + W[-7] + Sigma_o0(W[-15]) + W[-16];
             T1 = h + Sigma_E1(e) + Ch(e, f, g) + *W + *Kp;
             h = g;  g = f;  f = e;  e = d + T1;

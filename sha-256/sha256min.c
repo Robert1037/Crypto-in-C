@@ -1,8 +1,8 @@
 /**
  * MIT License
  * Copyright (c) 2023 Robert1037
- * sha256min.c v2.0 x64
- * Last modified: 2023-01-12
+ * sha256min.c v2.1 little-endian
+ * Last modified: 2023-01-21
  **/
 #include <stdio.h>
 #include <stdlib.h>
@@ -41,7 +41,7 @@ int main(int argc, char **argv)
     if (!(ch = (char*)calloc(b + 256, 1))) // 256 == 64 * sizeof(int), it's for W.
         return 0;
     rewind(fp);
-    if ((c = fread(ch, 1, a, fp)) != a)
+    if (fread(ch, 1, a, fp) != a)
         return 0;
     fclose(fp);
     ch[a] = 0x80;

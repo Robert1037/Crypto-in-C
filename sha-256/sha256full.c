@@ -1,8 +1,8 @@
 /**
  * MIT License
  * Copyright (c) 2023 Robert1037
- * sha256full.c v2.0 x64
- * Last modified: 2023-01-12
+ * sha256full.c v2.1 little-endian
+ * Last modified: 2023-01-21
  **/
 #include <stdio.h>
 #include <stdlib.h>
