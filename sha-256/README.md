@@ -1,6 +1,37 @@
 # SHA-256 Algorithm Implementation in C
 
-[TOC]
+- [SHA-256 Algorithm Implementation in C](#sha-256-algorithm-implementation-in-c)
+  - [Introduction](#introduction)
+  - [Algorithm](#algorithm)
+  - [Implementation \& Features](#implementation--features)
+  - [Download](#download)
+    - [Windows](#windows)
+      - [64-bit](#64-bit)
+        - [win10\_x64](#win10_x64)
+    - [Linux](#linux)
+      - [64-bit](#64-bit-1)
+        - [deb11\_x64](#deb11_x64)
+        - [rasp4b\_64](#rasp4b_64)
+      - [32-bit](#32-bit)
+        - [rasp4b\_32](#rasp4b_32)
+  - [Clone \& Build](#clone--build)
+    - [Windows](#windows-1)
+    - [Linux](#linux-1)
+  - [Usage](#usage)
+    - [Windows](#windows-2)
+    - [Linux](#linux-2)
+  - [Screenshots \& Test Results](#screenshots--test-results)
+    - [Windows10 x64](#windows10-x64)
+      - [sha256full.exe](#sha256fullexe)
+      - [sha256fast.exe](#sha256fastexe)
+      - [sha256min.exe](#sha256minexe)
+    - [Ubuntu20.04 x64](#ubuntu2004-x64)
+      - [sha256full](#sha256full)
+      - [sha256fast](#sha256fast)
+      - [sha256min](#sha256min)
+  - [References](#references)
+  - [Further Reading](#further-reading)
+
 
 Author: [Robert1037](https://github.com/Robert1037)
 
