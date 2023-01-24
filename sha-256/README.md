@@ -260,7 +260,7 @@ Download the latest version of **mingw**: https://github.com/niXman/mingw-builds
 Build one of them: (e.g. sha256full)
 
 ```powershell
-> mingw32-make sha256full
+> mingw32-make full
 ```
 
 Build all: (by default)
@@ -276,7 +276,7 @@ Prerequisites: **gcc**, **make**
 Build one of them: (e.g. sha256full)
 
 ```bash
-$ make sha256full
+$ make full
 ```
 
 Build all: (by default)
