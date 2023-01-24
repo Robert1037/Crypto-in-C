@@ -2,7 +2,7 @@
  * MIT License
  * Copyright (c) 2023 Robert1037
  * sha256fast.c v2.1 little-endian
- * Last modified: 2023-01-21
+ * Last modified: 2023-01-24
  **/
 #include <stdio.h>
 #include <stdlib.h>
@@ -51,6 +51,7 @@ int main()
         fclose(fp);
     } else {
         a = ch - name;
+        printf("file dose not exist\n");
         b = a & 63; // a % 64;
         b = a + ((b < 56) ? (M_LEN - b) : (M_LEN | (M_LEN - b)));
         ch = (char*)realloc(name, b + 254);
